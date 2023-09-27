@@ -1,0 +1,52 @@
+﻿@page
+@model Frontend.Pages.Venta.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Venta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Venta.Fecha)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Venta.Fecha)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Venta.Subtotal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Venta.Subtotal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Venta.Igv)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Venta.Igv)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Venta.Total)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Venta.Total)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Venta.Cliente)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Venta.Cliente)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Venta.idVenta" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

@@ -1,0 +1,60 @@
+﻿@page
+@model Frontend.Pages.Bitacora.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Bitacora[0].criticidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bitacora[0].descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bitacora[0].fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bitacora[0].funcionalidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bitacora[0].isAltaUsuario)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Bitacora) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.criticidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.funcionalidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isAltaUsuario)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.idBitacora">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.idBitacora">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.idBitacora">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,65 @@
+﻿@page
+@model Frontend.Pages.Usuario.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Usuario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.apellido)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.apellido)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.contrasena)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.contrasena)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.nombreUsuario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.nombreUsuario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.habilitado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.habilitado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.cantidadDeIntentos)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.cantidadDeIntentos)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Usuario.idUsuario" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

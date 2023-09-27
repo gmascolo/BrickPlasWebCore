@@ -1,0 +1,67 @@
+﻿@page
+@model Frontend.Pages.Usuario.LoginModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="main">
+    <section class="module bg-dark-30" data-background="assets/images/section-4.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <h1 class="module-title font-alt mb-0">Login-Registro</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="module">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5 col-sm-offset-1 mb-sm-40">
+                    <h4 class="font-alt">Login</h4>
+                    <hr class="divider-w mb-10">
+                    <form asp-action="Login" class="form" method="post" class="login">
+                        <div class="form-group">
+                            <input asp-for="Usuario.nombreUsuario" class="form-control" id="nombre" type="text" name="nombreUsuario" placeholder="NombreUsuario" />
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Usuario.contrasena" class="form-control" id="contrasena" type="password" name="contrasena" placeholder="Contraseña" />
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-round btn-b" type="submit">Login</button>
+                        </div>
+                        @if (ViewData["Mensaje"] != null)
+                        {
+
+                            <div class="form-group">
+                                <div class="alert alert-danger" role="alert">
+                                    @ViewData["Mensaje"]
+                                </div>
+                            </div>
+                        }
+                        ¿No tienes una cuenta? <a href="@Url.Action("Register","Inicio")"> Registrate!</a>
+
+                        <div class="form-group"><a href="">Olvido su password?</a></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+
+    jQuery('.registro').validate({
+        rules: {
+            contrasena: {
+                minlength: 5,
+            },
+            recontrasena: {
+                minlength: 5,
+                equalTo: "#password"
+            }
+        }
+    });
+
+</script>
