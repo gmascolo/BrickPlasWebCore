@@ -10,15 +10,15 @@ var connection = String.Empty;
 if (builder.Environment.IsDevelopment())
 {
     builder.Configuration.AddEnvironmentVariables().AddJsonFile("appsettings.Development.json");
-    connection = builder.Configuration.GetConnectionString("Azure");
+    connection = builder.Configuration.GetConnectionString("Casa");
 }
 else
 {
-    connection = Environment.GetEnvironmentVariable("Azure");
+    connection = Environment.GetEnvironmentVariable("Casa");
 }
 
 builder.Services.AddDbContext<CasaContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Azure") ?? throw new InvalidOperationException("Connection string 'Azure' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Casa") ?? throw new InvalidOperationException("Connection string 'Azure' not found.")));
 
 //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

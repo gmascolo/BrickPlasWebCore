@@ -5,8 +5,9 @@ namespace Frontend.Pages
 {
     public class LoginOKModel : PageModel
     {
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return Page();
         }
     }
 }

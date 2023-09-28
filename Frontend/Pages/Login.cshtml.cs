@@ -1,3 +1,6 @@
+using Azure;
+using BrickplasWebCore.Model;
+using Frontend.Recursos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -27,17 +30,22 @@ namespace Frontend.Pages.Usuario
                 return NotFound();
             }
 
-            Usuario = await _context.Usuario.FindAsync(nombreUsuario);
+            var query = from U in _context.Usuario
+                        where U.nombreUsuario == nombreUsuario
+                        select U;
+             Usuario = query.FirstOrDefault<BrickplasWebCore.Model.Usuario>();
 
             if (Usuario == null)
             {
                 return NotFound();
             }
-            if (Usuario.contrasena == contrasena )
+            if (Usuario.contrasena == contrasena)
             {
                 Response.Redirect("LoginOK.cshtml");
             }
             return Page();
         }
     }
+
 }
+        
