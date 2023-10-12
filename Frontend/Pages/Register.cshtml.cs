@@ -31,8 +31,6 @@ namespace Frontend.Pages.Usuario
 
             }
 
-
-
             return RedirectToPage("./Index");
         }
     }
