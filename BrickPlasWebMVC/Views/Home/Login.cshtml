@@ -1,6 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Login";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
+﻿@model BrickPlasWebMVC.ViewModel.ValidateViewModel
+@{
+   ViewData["Title"] = "Login";
 }
 
 <div class="main">
@@ -19,7 +19,13 @@
                 <div class="col-sm-5 col-sm-offset-1 mb-sm-40">
                     <h4 class="font-alt">Login</h4>
                     <hr class="divider-w mb-10">
-                    <form asp-action="Login" class="form" method="post" class="login">
+                    @if (Model != null && Model.Visible)
+                    {
+                        <div class="alert alert-danger" role="alert" />
+                    }
+
+                    <form asp-action="ProcessLogin" class="form" method="post" class="login" name="formLogin">
+                        @Html.AntiForgeryToken()
                         <div class="form-group">
                             <input class="form-control" id="nombre" type="text" name="nombreUsuario" placeholder="NombreUsuario" />
                         </div>
@@ -38,7 +44,7 @@
                                 </div>
                             </div>
                         }
-                        ¿No tienes una cuenta? <a href="@Url.Action("Register","Inicio")"> Registrate!</a>
+                        ¿No tienes una cuenta? <a href="@Url.Action("Register","Home")"> Registrate!</a>
 
                         <div class="form-group"><a href="">Olvido su password?</a></div>
                     </form>

@@ -1,6 +1,7 @@
 ﻿
 
 using System.ComponentModel.DataAnnotations;
+using BrickPlasWebMVC.Models.Negocio;
 
 namespace BrickplasWebCore.Model
 {

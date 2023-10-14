@@ -1,8 +1,6 @@
-﻿
+﻿using Microsoft.AspNetCore.Identity;
 
-using Microsoft.AspNetCore.Identity;
-
-namespace BrickplasWebCore.Model
+namespace BrickPlasWebMVC.Models.Negocio
 {
     public class User : IdentityUser<int>
     {
@@ -15,6 +13,6 @@ namespace BrickplasWebCore.Model
         public string CUIT { get; set; }
         public bool Enabled { get; set; }
         public int LoginAttempts { get; set; }
- 
+
     }
 }

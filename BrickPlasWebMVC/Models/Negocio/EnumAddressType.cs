@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace BrickplasWebCore.Model
+namespace BrickPlasWebMVC.Models.Negocio
 {
     public enum EnumAddressType
     {

@@ -1,4 +1,5 @@
 ﻿using BrickplasWebCore.Model;
+using BrickPlasWebMVC.Models.Negocio;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
