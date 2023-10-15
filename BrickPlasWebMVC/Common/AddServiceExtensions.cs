@@ -7,6 +7,8 @@ namespace BrickPlasWebMVC.Common
     {
         public static void AddServices(this IServiceCollection services)
         {
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
 

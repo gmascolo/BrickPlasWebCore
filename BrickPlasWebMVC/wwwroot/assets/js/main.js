@@ -1,851 +1,321 @@
-console.log('%c Proudly Crafted with ZiOn.', 'background: #222; color: #bada55');
+/**
+* Template Name: NiceAdmin
+* Updated: Sep 18 2023 with Bootstrap v5.3.2
+* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+* Author: BootstrapMade.com
+* License: https://bootstrapmade.com/license/
+*/
+(function() {
+  "use strict";
 
-/* ---------------------------------------------- /*
- * Preloader
- /* ---------------------------------------------- */
-(function(){
-    $(window).on('load', function() {
-        $('.loader').fadeOut();
-        $('.page-loader').delay(350).fadeOut('slow');
+  /**
+   * Easy selector helper function
+   */
+  const select = (el, all = false) => {
+    el = el.trim()
+    if (all) {
+      return [...document.querySelectorAll(el)]
+    } else {
+      return document.querySelector(el)
+    }
+  }
+
+  /**
+   * Easy event listener function
+   */
+  const on = (type, el, listener, all = false) => {
+    if (all) {
+      select(el, all).forEach(e => e.addEventListener(type, listener))
+    } else {
+      select(el, all).addEventListener(type, listener)
+    }
+  }
+
+  /**
+   * Easy on scroll event listener 
+   */
+  const onscroll = (el, listener) => {
+    el.addEventListener('scroll', listener)
+  }
+
+  /**
+   * Sidebar toggle
+   */
+  if (select('.toggle-sidebar-btn')) {
+    on('click', '.toggle-sidebar-btn', function(e) {
+      select('body').classList.toggle('toggle-sidebar')
+    })
+  }
+
+  /**
+   * Search bar toggle
+   */
+  if (select('.search-bar-toggle')) {
+    on('click', '.search-bar-toggle', function(e) {
+      select('.search-bar').classList.toggle('search-bar-show')
+    })
+  }
+
+  /**
+   * Navbar links active state on scroll
+   */
+  let navbarlinks = select('#navbar .scrollto', true)
+  const navbarlinksActive = () => {
+    let position = window.scrollY + 200
+    navbarlinks.forEach(navbarlink => {
+      if (!navbarlink.hash) return
+      let section = select(navbarlink.hash)
+      if (!section) return
+      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
+        navbarlink.classList.add('active')
+      } else {
+        navbarlink.classList.remove('active')
+      }
+    })
+  }
+  window.addEventListener('load', navbarlinksActive)
+  onscroll(document, navbarlinksActive)
+
+  /**
+   * Toggle .header-scrolled class to #header when page is scrolled
+   */
+  let selectHeader = select('#header')
+  if (selectHeader) {
+    const headerScrolled = () => {
+      if (window.scrollY > 100) {
+        selectHeader.classList.add('header-scrolled')
+      } else {
+        selectHeader.classList.remove('header-scrolled')
+      }
+    }
+    window.addEventListener('load', headerScrolled)
+    onscroll(document, headerScrolled)
+  }
+
+  /**
+   * Back to top button
+   */
+  let backtotop = select('.back-to-top')
+  if (backtotop) {
+    const toggleBacktotop = () => {
+      if (window.scrollY > 100) {
+        backtotop.classList.add('active')
+      } else {
+        backtotop.classList.remove('active')
+      }
+    }
+    window.addEventListener('load', toggleBacktotop)
+    onscroll(document, toggleBacktotop)
+  }
+
+  /**
+   * Initiate tooltips
+   */
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
+
+  /**
+   * Initiate quill editors
+   */
+  if (select('.quill-editor-default')) {
+    new Quill('.quill-editor-default', {
+      theme: 'snow'
     });
+  }
 
-    $(document).ready(function() {
+  if (select('.quill-editor-bubble')) {
+    new Quill('.quill-editor-bubble', {
+      theme: 'bubble'
+    });
+  }
 
-        /* ---------------------------------------------- /*
-         * WOW Animation When You Scroll
-         /* ---------------------------------------------- */
-
-        wow = new WOW({
-            mobile: false
-        });
-        wow.init();
-
-
-        /* ---------------------------------------------- /*
-         * Scroll top
-         /* ---------------------------------------------- */
-
-        $(window).scroll(function() {
-            if ($(this).scrollTop() > 100) {
-                $('.scroll-up').fadeIn();
-            } else {
-                $('.scroll-up').fadeOut();
-            }
-        });
-
-        $('a[href="#totop"]').click(function() {
-            $('html, body').animate({ scrollTop: 0 }, 'slow');
-            return false;
-        });
-
-
-        /* ---------------------------------------------- /*
-         * Initialization General Scripts for all pages
-         /* ---------------------------------------------- */
-
-        var homeSection = $('.home-section'),
-            navbar      = $('.navbar-custom'),
-            navHeight   = navbar.height(),
-            worksgrid   = $('#works-grid'),
-            width       = Math.max($(window).width(), window.innerWidth),
-            mobileTest  = false;
-
-        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            mobileTest = true;
-        }
-
-        buildHomeSection(homeSection);
-        navbarAnimation(navbar, homeSection, navHeight);
-        navbarSubmenu(width);
-        hoverDropdown(width, mobileTest);
-
-        $(window).resize(function() {
-            var width = Math.max($(window).width(), window.innerWidth);
-            buildHomeSection(homeSection);
-            hoverDropdown(width, mobileTest);
-        });
-
-        $(window).scroll(function() {
-            effectsHomeSection(homeSection, this);
-            navbarAnimation(navbar, homeSection, navHeight);
-        });
-
-        /* ---------------------------------------------- /*
-         * Set sections backgrounds
-         /* ---------------------------------------------- */
-
-        var module = $('.home-section, .module, .module-small, .side-image');
-        module.each(function(i) {
-            if ($(this).attr('data-background')) {
-                $(this).css('background-image', 'url(' + $(this).attr('data-background') + ')');
-            }
-        });
-
-        /* ---------------------------------------------- /*
-         * Home section height
-         /* ---------------------------------------------- */
-
-        function buildHomeSection(homeSection) {
-            if (homeSection.length > 0) {
-                if (homeSection.hasClass('home-full-height')) {
-                    homeSection.height($(window).height());
-                } else {
-                    homeSection.height($(window).height() * 0.85);
-                }
-            }
-        }
-
-
-        /* ---------------------------------------------- /*
-         * Home section effects
-         /* ---------------------------------------------- */
-
-        function effectsHomeSection(homeSection, scrollTopp) {
-            if (homeSection.length > 0) {
-                var homeSHeight = homeSection.height();
-                var topScroll = $(document).scrollTop();
-                if ((homeSection.hasClass('home-parallax')) && ($(scrollTopp).scrollTop() <= homeSHeight)) {
-                    homeSection.css('top', (topScroll * 0.55));
-                }
-                if (homeSection.hasClass('home-fade') && ($(scrollTopp).scrollTop() <= homeSHeight)) {
-                    var caption = $('.caption-content');
-                    caption.css('opacity', (1 - topScroll/homeSection.height() * 1));
-                }
-            }
-        }
-
-        /* ---------------------------------------------- /*
-         * Intro slider setup
-         /* ---------------------------------------------- */
-
-        if( $('.hero-slider').length > 0 ) {
-            $('.hero-slider').flexslider( {
-                animation: "fade",
-                animationSpeed: 1000,
-                animationLoop: true,
-                prevText: '',
-                nextText: '',
-                before: function(slider) {
-                    $('.titan-caption').fadeOut().animate({top:'-80px'},{queue:false, easing: 'swing', duration: 700});
-                    slider.slides.eq(slider.currentSlide).delay(500);
-                    slider.slides.eq(slider.animatingTo).delay(500);
-                },
-                after: function(slider) {
-                    $('.titan-caption').fadeIn().animate({top:'0'},{queue:false, easing: 'swing', duration: 700});
-                },
-                useCSS: true
-            });
-        }
-
-
-        /* ---------------------------------------------- /*
-         * Rotate
-         /* ---------------------------------------------- */
-
-        $(".rotate").textrotator({
-            animation: "dissolve",
-            separator: "|",
-            speed: 3000
-        });
-
-
-        /* ---------------------------------------------- /*
-         * Transparent navbar animation
-         /* ---------------------------------------------- */
-
-        function navbarAnimation(navbar, homeSection, navHeight) {
-            var topScroll = $(window).scrollTop();
-            if (navbar.length > 0 && homeSection.length > 0) {
-                if(topScroll >= navHeight) {
-                    navbar.removeClass('navbar-transparent');
-                } else {
-                    navbar.addClass('navbar-transparent');
-                }
-            }
-        }
-
-        /* ---------------------------------------------- /*
-         * Navbar submenu
-         /* ---------------------------------------------- */
-
-        function navbarSubmenu(width) {
-            if (width > 767) {
-                $('.navbar-custom .navbar-nav > li.dropdown').hover(function() {
-                    var MenuLeftOffset  = $('.dropdown-menu', $(this)).offset().left;
-                    var Menu1LevelWidth = $('.dropdown-menu', $(this)).width();
-                    if (width - MenuLeftOffset < Menu1LevelWidth * 2) {
-                        $(this).children('.dropdown-menu').addClass('leftauto');
-                    } else {
-                        $(this).children('.dropdown-menu').removeClass('leftauto');
-                    }
-                    if ($('.dropdown', $(this)).length > 0) {
-                        var Menu2LevelWidth = $('.dropdown-menu', $(this)).width();
-                        if (width - MenuLeftOffset - Menu1LevelWidth < Menu2LevelWidth) {
-                            $(this).children('.dropdown-menu').addClass('left-side');
-                        } else {
-                            $(this).children('.dropdown-menu').removeClass('left-side');
-                        }
-                    }
-                });
-            }
-        }
-
-        /* ---------------------------------------------- /*
-         * Navbar hover dropdown on desctop
-         /* ---------------------------------------------- */
-
-        function hoverDropdown(width, mobileTest) {
-            if ((width > 767) && (mobileTest !== true)) {
-                $('.navbar-custom .navbar-nav > li.dropdown, .navbar-custom li.dropdown > ul > li.dropdown').removeClass('open');
-                var delay = 0;
-                var setTimeoutConst;
-                $('.navbar-custom .navbar-nav > li.dropdown, .navbar-custom li.dropdown > ul > li.dropdown').hover(function() {
-                        var $this = $(this);
-                        setTimeoutConst = setTimeout(function() {
-                            $this.addClass('open');
-                            $this.find('.dropdown-toggle').addClass('disabled');
-                        }, delay);
-                    },
-                    function() {
-                        clearTimeout(setTimeoutConst);
-                        $(this).removeClass('open');
-                        $(this).find('.dropdown-toggle').removeClass('disabled');
-                    });
-            } else {
-                $('.navbar-custom .navbar-nav > li.dropdown, .navbar-custom li.dropdown > ul > li.dropdown').unbind('mouseenter mouseleave');
-                $('.navbar-custom [data-toggle=dropdown]').not('.binded').addClass('binded').on('click', function(event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    $(this).parent().siblings().removeClass('open');
-                    $(this).parent().siblings().find('[data-toggle=dropdown]').parent().removeClass('open');
-                    $(this).parent().toggleClass('open');
-                });
-            }
-        }
-
-        /* ---------------------------------------------- /*
-         * Navbar collapse on click
-         /* ---------------------------------------------- */
-
-        $(document).on('click','.navbar-collapse.in',function(e) {
-            if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
-                $(this).collapse('hide');
-            }
-        });
-
-
-        /* ---------------------------------------------- /*
-         * Video popup, Gallery
-         /* ---------------------------------------------- */
-
-        $('.video-pop-up').magnificPopup({
-            type: 'iframe'
-        });
-
-        $(".gallery-item").magnificPopup({
-            delegate: 'a',
-            type: 'image',
-            gallery: {
-                enabled: true,
-                navigateByImgClick: true,
-                preload: [0,1]
+  if (select('.quill-editor-full')) {
+    new Quill(".quill-editor-full", {
+      modules: {
+        toolbar: [
+          [{
+            font: []
+          }, {
+            size: []
+          }],
+          ["bold", "italic", "underline", "strike"],
+          [{
+              color: []
             },
-            image: {
-                titleSrc: 'title',
-                tError: 'The image could not be loaded.'
+            {
+              background: []
             }
-        });
-
-
-        /* ---------------------------------------------- /*
-         * Portfolio
-         /* ---------------------------------------------- */
-
-        var worksgrid   = $('#works-grid'),
-            worksgrid_mode;
-
-        if (worksgrid.hasClass('works-grid-masonry')) {
-            worksgrid_mode = 'masonry';
-        } else {
-            worksgrid_mode = 'fitRows';
-        }
-
-        worksgrid.imagesLoaded(function() {
-            worksgrid.isotope({
-                layoutMode: worksgrid_mode,
-                itemSelector: '.work-item'
-            });
-        });
-
-        $('#filters a').click(function() {
-            $('#filters .current').removeClass('current');
-            $(this).addClass('current');
-            var selector = $(this).attr('data-filter');
-
-            worksgrid.isotope({
-                filter: selector,
-                animationOptions: {
-                    duration: 750,
-                    easing: 'linear',
-                    queue: false
-                }
-            });
-
-            return false;
-        });
-
-
-        /* ---------------------------------------------- /*
-         * Testimonials
-         /* ---------------------------------------------- */
-
-        if ($('.testimonials-slider').length > 0 ) {
-            $('.testimonials-slider').flexslider( {
-                animation: "slide",
-                smoothHeight: true
-            });
-        }
-
-
-        /* ---------------------------------------------- /*
-         * Post Slider
-         /* ---------------------------------------------- */
-
-        if ($('.post-images-slider').length > 0 ) {
-            $('.post-images-slider').flexslider( {
-                animation: "slide",
-                smoothHeight: true,
-            });
-        }
-
-
-        /* ---------------------------------------------- /*
-         * Progress bar animations
-         /* ---------------------------------------------- */
-
-        $('.progress-bar').each(function(i) {
-            $(this).appear(function() {
-                var percent = $(this).attr('aria-valuenow');
-                $(this).animate({'width' : percent + '%'});
-                $(this).find('span').animate({'opacity' : 1}, 900);
-                $(this).find('span').countTo({from: 0, to: percent, speed: 900, refreshInterval: 30});
-            });
-        });
-
-
-        /* ---------------------------------------------- /*
-         * Funfact Count-up
-         /* ---------------------------------------------- */
-
-        $('.count-item').each(function(i) {
-            $(this).appear(function() {
-                var number = $(this).find('.count-to').data('countto');
-                $(this).find('.count-to').countTo({from: 0, to: number, speed: 1200, refreshInterval: 30});
-            });
-        });
-
-
-        /* ---------------------------------------------- /*
-         * Youtube video background
-         /* ---------------------------------------------- */
-
-        $(function(){
-            $(".video-player").mb_YTPlayer();
-        });
-
-        $('#video-play').click(function(event) {
-            event.preventDefault();
-            if ($(this).hasClass('fa-play')) {
-                $('.video-player').playYTP();
-            } else {
-                $('.video-player').pauseYTP();
+          ],
+          [{
+              script: "super"
+            },
+            {
+              script: "sub"
             }
-            $(this).toggleClass('fa-play fa-pause');
-            return false;
-        });
-
-        $('#video-volume').click(function(event) {
-            event.preventDefault();
-            if ($(this).hasClass('fa-volume-off')) {
-                $('.video-player').YTPUnmute();
-            } else {
-                $('.video-player').YTPMute();
+          ],
+          [{
+              list: "ordered"
+            },
+            {
+              list: "bullet"
+            },
+            {
+              indent: "-1"
+            },
+            {
+              indent: "+1"
             }
-            $(this).toggleClass('fa-volume-off fa-volume-up');
-            return false;
-        });
-
-
-        /* ---------------------------------------------- /*
-         * Owl Carousel
-         /* ---------------------------------------------- */
-
-        $('.owl-carousel').each(function(i) {
-
-            // Check items number
-            if ($(this).data('items') > 0) {
-                items = $(this).data('items');
-            } else {
-                items = 4;
-            }
-
-            // Check pagination true/false
-            if (($(this).data('pagination') > 0) && ($(this).data('pagination') === true)) {
-                pagination = true;
-            } else {
-                pagination = false;
-            }
-
-            // Check navigation true/false
-            if (($(this).data('navigation') > 0) && ($(this).data('navigation') === true)) {
-                navigation = true;
-            } else {
-                navigation = false;
-            }
-
-            // Build carousel
-            $(this).owlCarousel( {
-                navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-                nav: navigation,
-                dots: pagination,
-                loop: true,
-                dotsSpeed: 400,
-                items: items,
-                navSpeed: 300,
-                autoplay: 2000
-            });
-
-        });
-
-
-        /* ---------------------------------------------- /*
-         * Blog masonry
-         /* ---------------------------------------------- */
-
-        $('.post-masonry').imagesLoaded(function() {
-            $('.post-masonry').masonry();
-        });
-
-
-        /* ---------------------------------------------- /*
-         * Scroll Animation
-         /* ---------------------------------------------- */
-
-        $('.section-scroll').bind('click', function(e) {
-            var anchor = $(this);
-            $('html, body').stop().animate({
-                scrollTop: $(anchor.attr('href')).offset().top - 50
-            }, 1000);
-            e.preventDefault();
-        });
-
-        /*===============================================================
-         Working Contact Form
-         ================================================================*/
-
-        $("#contactForm").submit(function (e) {
-
-            e.preventDefault();
-            var $ = jQuery;
-
-            var postData = $(this).serializeArray(),
-                formURL = $(this).attr("action"),
-                $cfResponse = $('#contactFormResponse'),
-                $cfsubmit = $("#cfsubmit"),
-                cfsubmitText = $cfsubmit.text();
-
-            $cfsubmit.text("Sending...");
-
-
-            $.ajax(
-                {
-                    url: formURL,
-                    type: "POST",
-                    data: postData,
-                    success: function (data) {
-                        $cfResponse.html(data);
-                        $cfsubmit.text(cfsubmitText);
-                        $('#contactForm input[name=name]').val('');
-                        $('#contactForm input[name=email]').val('');
-                        $('#contactForm textarea[name=message]').val('');
-                    },
-                    error: function (data) {
-                        alert("Error occurd! Please try again");
-                    }
-                });
-
-            return false;
-
-        });
-
-
-        /*===============================================================
-         Working Request A Call Form
-         ================================================================*/
-
-        $("#requestACall").submit(function (e) {
-
-            e.preventDefault();
-            var $ = jQuery;
-
-            var postData = $(this).serializeArray(),
-                formURL = $(this).attr("action"),
-                $cfResponse = $('#requestFormResponse'),
-                $cfsubmit = $("#racSubmit"),
-                cfsubmitText = $cfsubmit.text();
-
-            $cfsubmit.text("Sending...");
-
-
-            $.ajax(
-                {
-                    url: formURL,
-                    type: "POST",
-                    data: postData,
-                    success: function (data) {
-                        $cfResponse.html(data);
-                        $cfsubmit.text(cfsubmitText);
-                        $('#requestACall input[name=name]').val('');
-                        $('#requestACall input[name=subject]').val('');
-                        $('#requestACall textarea[name=phone]').val('');
-                    },
-                    error: function (data) {
-                        alert("Error occurd! Please try again");
-                    }
-                });
-
-            return false;
-
-        });
-
-
-        /*===============================================================
-         Working Reservation Form
-         ================================================================*/
-
-        $("#reservationForm").submit(function (e) {
-
-            e.preventDefault();
-            var $ = jQuery;
-
-            var postData = $(this).serializeArray(),
-                formURL = $(this).attr("action"),
-                $cfResponse = $('#reservationFormResponse'),
-                $cfsubmit = $("#rfsubmit"),
-                cfsubmitText = $cfsubmit.text();
-
-            $cfsubmit.text("Sending...");
-
-
-            $.ajax(
-                {
-                    url: formURL,
-                    type: "POST",
-                    data: postData,
-                    success: function (data) {
-                        $cfResponse.html(data);
-                        $cfsubmit.text(cfsubmitText);
-                        $('#reservationForm input[name=date]').val('');
-                        $('#reservationForm input[name=time]').val('');
-                        $('#reservationForm textarea[name=people]').val('');
-                        $('#reservationForm textarea[name=email]').val('');
-                    },
-                    error: function (data) {
-                        alert("Error occurd! Please try again");
-                    }
-                });
-
-            return false;
-
-        });
-
-
-        /* ---------------------------------------------- /*
-         * Subscribe form ajax
-         /* ---------------------------------------------- */
-
-        $('#subscription-form').submit(function(e) {
-
-            e.preventDefault();
-            var $form           = $('#subscription-form');
-            var submit          = $('#subscription-form-submit');
-            var ajaxResponse    = $('#subscription-response');
-            var email           = $('input#semail').val();
-
-            $.ajax({
-                type: 'POST',
-                url: 'assets/php/subscribe.php',
-                dataType: 'json',
-                data: {
-                    email: email
-                },
-                cache: false,
-                beforeSend: function(result) {
-                    submit.empty();
-                    submit.append('<i class="fa fa-cog fa-spin"></i> Wait...');
-                },
-                success: function(result) {
-                    if(result.sendstatus == 1) {
-                        ajaxResponse.html(result.message);
-                        $form.fadeOut(500);
-                    } else {
-                        ajaxResponse.html(result.message);
-                    }
-                }
-            });
-
-        });
-
-
-        /* ---------------------------------------------- /*
-         * Google Map
-         /* ---------------------------------------------- */
-
-        if($("#map").length == 0 || typeof google == 'undefined') return;
-
-        // When the window has finished loading create our google map below
-        google.maps.event.addDomListener(window, 'load', init);
-
-        var mkr = new google.maps.LatLng(40.6700, -74.2000);
-        var cntr = (mobileTest) ? mkr : new google.maps.LatLng(40.6700, -73.9400);
-
-        function init() {
-            // Basic options for a simple Google Map
-            // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
-            var mapOptions = {
-                // How zoomed in you want the map to start at (always required)
-                zoom: 11,
-                scrollwheel: false,
-                // The latitude and longitude to center the map (always required)
-                center: cntr, // New York
-
-                // How you would like to style the map.
-                // This is where you would paste any style found on Snazzy Maps.
-                styles: [
-                    {
-                        "featureType": "all",
-                        "elementType": "geometry.fill",
-                        "stylers": [
-                            {
-                                "visibility": "on"
-                            },
-                            {
-                                "saturation": "-11"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative",
-                        "elementType": "geometry.fill",
-                        "stylers": [
-                            {
-                                "saturation": "22"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative",
-                        "elementType": "geometry.stroke",
-                        "stylers": [
-                            {
-                                "saturation": "-58"
-                            },
-                            {
-                                "color": "#cfcece"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative",
-                        "elementType": "labels.text",
-                        "stylers": [
-                            {
-                                "color": "#f8f8f8"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                            {
-                                "color": "#999999"
-                            },
-                            {
-                                "visibility": "on"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative",
-                        "elementType": "labels.text.stroke",
-                        "stylers": [
-                            {
-                                "visibility": "on"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.country",
-                        "elementType": "geometry.fill",
-                        "stylers": [
-                            {
-                                "color": "#f9f9f9"
-                            },
-                            {
-                                "visibility": "simplified"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "landscape",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "color": "#f2f2f2"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "landscape",
-                        "elementType": "geometry",
-                        "stylers": [
-                            {
-                                "saturation": "-19"
-                            },
-                            {
-                                "lightness": "-2"
-                            },
-                            {
-                                "visibility": "on"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "poi",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "saturation": -100
-                            },
-                            {
-                                "lightness": 45
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road.highway",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "simplified"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "road.arterial",
-                        "elementType": "labels.icon",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "transit",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "water",
-                        "elementType": "all",
-                        "stylers": [
-                            {
-                                "color": "#d8e1e5"
-                            },
-                            {
-                                "visibility": "on"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "water",
-                        "elementType": "geometry.fill",
-                        "stylers": [
-                            {
-                                "color": "#dedede"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "water",
-                        "elementType": "labels.text",
-                        "stylers": [
-                            {
-                                "color": "#cbcbcb"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "water",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                            {
-                                "color": "#9c9c9c"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "water",
-                        "elementType": "labels.text.stroke",
-                        "stylers": [
-                            {
-                                "visibility": "off"
-                            }
-                        ]
-                    }
-                ]
-            };
-
-            // Get the HTML DOM element that will contain your map
-            // We are using a div with id="map" seen below in the <body>
-            var mapElement = document.getElementById('map');
-
-            // Create the Google Map using our element and options defined above
-            var map = new google.maps.Map(mapElement, mapOptions);
-
-            // Let's also add a marker while we're at it
-            var image = new google.maps.MarkerImage('assets/images/map-icon.png',
-                new google.maps.Size(59, 65),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(24, 42)
-            );
-
-            var marker = new google.maps.Marker({
-                position: mkr,
-                icon: image,
-                title: 'Titan',
-                infoWindow: {
-                    content: '<p><strong>Rival</strong><br/>121 Somewhere Ave, Suite 123<br/>P: (123) 456-7890<br/>Australia</p>'
-                },
-                map: map,
-            });
-        }
-
+          ],
+          ["direction", {
+            align: []
+          }],
+          ["link", "image", "video"],
+          ["clean"]
+        ]
+      },
+      theme: "snow"
     });
-})(jQuery);
+  }
 
+  /**
+   * Initiate TinyMCE Editor
+   */
+  const useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const isSmallScreen = window.matchMedia('(max-width: 1023.5px)').matches;
 
+  tinymce.init({
+    selector: 'textarea.tinymce-editor',
+    plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
+    editimage_cors_hosts: ['picsum.photos'],
+    menubar: 'file edit view insert format tools table help',
+    toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+    toolbar_sticky: true,
+    toolbar_sticky_offset: isSmallScreen ? 102 : 108,
+    autosave_ask_before_unload: true,
+    autosave_interval: '30s',
+    autosave_prefix: '{path}{query}-{id}-',
+    autosave_restore_when_empty: false,
+    autosave_retention: '2m',
+    image_advtab: true,
+    link_list: [{
+        title: 'My page 1',
+        value: 'https://www.tiny.cloud'
+      },
+      {
+        title: 'My page 2',
+        value: 'http://www.moxiecode.com'
+      }
+    ],
+    image_list: [{
+        title: 'My page 1',
+        value: 'https://www.tiny.cloud'
+      },
+      {
+        title: 'My page 2',
+        value: 'http://www.moxiecode.com'
+      }
+    ],
+    image_class_list: [{
+        title: 'None',
+        value: ''
+      },
+      {
+        title: 'Some class',
+        value: 'class-name'
+      }
+    ],
+    importcss_append: true,
+    file_picker_callback: (callback, value, meta) => {
+      /* Provide file and text for the link dialog */
+      if (meta.filetype === 'file') {
+        callback('https://www.google.com/logos/google.jpg', {
+          text: 'My text'
+        });
+      }
+
+      /* Provide image and alt text for the image dialog */
+      if (meta.filetype === 'image') {
+        callback('https://www.google.com/logos/google.jpg', {
+          alt: 'My alt text'
+        });
+      }
+
+      /* Provide alternative source and posted for the media dialog */
+      if (meta.filetype === 'media') {
+        callback('movie.mp4', {
+          source2: 'alt.ogg',
+          poster: 'https://www.google.com/logos/google.jpg'
+        });
+      }
+    },
+    templates: [{
+        title: 'New Table',
+        description: 'creates a new table',
+        content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>'
+      },
+      {
+        title: 'Starting my story',
+        description: 'A cure for writers block',
+        content: 'Once upon a time...'
+      },
+      {
+        title: 'New list with dates',
+        description: 'New List with dates',
+        content: '<div class="mceTmpl"><span class="cdate">cdate</span><br><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>'
+      }
+    ],
+    template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
+    template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
+    height: 600,
+    image_caption: true,
+    quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+    noneditable_class: 'mceNonEditable',
+    toolbar_mode: 'sliding',
+    contextmenu: 'link image table',
+    skin: useDarkMode ? 'oxide-dark' : 'oxide',
+    content_css: useDarkMode ? 'dark' : 'default',
+    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+  });
+
+  /**
+   * Initiate Bootstrap validation check
+   */
+  var needsValidation = document.querySelectorAll('.needs-validation')
+
+  Array.prototype.slice.call(needsValidation)
+    .forEach(function(form) {
+      form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+
+  /**
+   * Initiate Datatables
+   */
+  const datatables = select('.datatable', true)
+  datatables.forEach(datatable => {
+    new simpleDatatables.DataTable(datatable);
+  })
+
+  /**
+   * Autoresize echart charts
+   */
+  const mainContainer = select('#main');
+  if (mainContainer) {
+    setTimeout(() => {
+      new ResizeObserver(function() {
+        select('.echart', true).forEach(getEchart => {
+          echarts.getInstanceByDom(getEchart).resize();
+        })
+      }).observe(mainContainer);
+    }, 200);
+  }
+
+})();
