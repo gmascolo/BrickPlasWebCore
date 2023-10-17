@@ -31,7 +31,7 @@ namespace BrickPlasWebMVC.Repositories
 
         async Task<List<Product>> IGenericRepository<Product>.GetAll()
         {
-            var products = await _context.Products.ToListAsync();
+            List<Product> products = await _context.Products.ToListAsync();
 
             return products;
         }

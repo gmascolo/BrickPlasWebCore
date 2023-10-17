@@ -29,6 +29,12 @@ namespace BrickPlasWebMVC.Controllers
             return View("Login");
         }
 
+        public IActionResult Shop()
+        {
+
+            return View("Shop");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ProcessLogin(IFormCollection loginForm)

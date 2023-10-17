@@ -6,11 +6,11 @@ namespace BrickPlasWebMVC.Services
 {
     public class CategoryService : ICategoryService
     {
-        private readonly ICategoryRepository _CategoryRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
         public CategoryService(ICategoryRepository CategoryRepository)
         {
-            _CategoryRepository = CategoryRepository;
+            _categoryRepository = CategoryRepository;
         }
 
         public Task<bool> Create(Category entity)
@@ -28,9 +28,9 @@ namespace BrickPlasWebMVC.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<Category>> GetAll()
+        public async Task<List<Category>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _categoryRepository.GetAll(); ;
         }
 
         public Task<Category> GetById(int? id)

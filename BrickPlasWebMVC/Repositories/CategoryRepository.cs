@@ -29,9 +29,11 @@ namespace BrickPlasWebMVC.Repositories
             throw new NotImplementedException();
         }
 
-        Task<List<Category>> IGenericRepository<Category>.GetAll()
+        async Task<List<Category>> IGenericRepository<Category>.GetAll()
         {
-            throw new NotImplementedException();
+            List<Category> categories = await _context.Categories.ToListAsync();
+
+            return categories;
         }
 
         Task<Category> IGenericRepository<Category>.GetById(int? id)

@@ -5,6 +5,6 @@ namespace BrickPlasWebMVC.Services
 {
     public interface IProductService : IGenericService<Product>
     {
-        private readonly Iprod
+        Task<Category> GetProductByName(string Product);
     }
 }

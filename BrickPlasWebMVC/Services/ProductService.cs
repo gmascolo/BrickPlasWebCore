@@ -38,6 +38,11 @@ namespace BrickPlasWebMVC.Services
             throw new NotImplementedException();
         }
 
+        Task<Category> IProductService.GetProductByName(string Product)
+        {
+            throw new NotImplementedException();
+        }
+
         Task<bool> IGenericService<Product>.Update(Product entity)
         {
             throw new NotImplementedException();
