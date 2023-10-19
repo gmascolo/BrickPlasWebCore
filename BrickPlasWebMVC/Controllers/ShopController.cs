@@ -30,5 +30,11 @@ namespace BrickPlasWebMVC.Controllers
             return View(new ShopViewModel(products, categories));
         }
 
+        public IActionResult Item()
+        {
+
+            return View("Item");
+        }
+
     }
 }

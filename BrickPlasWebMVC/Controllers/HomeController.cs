@@ -32,7 +32,7 @@ namespace BrickPlasWebMVC.Controllers
         public IActionResult Shop()
         {
 
-            return View("Shop");
+            return Redirect("/Shop");
         }
 
         [HttpPost]

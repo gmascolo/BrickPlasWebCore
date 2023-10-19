@@ -1,9 +1,10 @@
 ﻿@model BrickPlasWebMVC.ViewModel.ShopViewModel
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Tienda Brickplas";
 }
 <div class="main">
-    <section class="module bg-dark-60 shop-page-header" data-background="~/assets/images/shop/eco-house.jpg">
+    <section class="module bg-dark-60 shop-page-header" data-background="/Home/assets/images/shop/eco-house.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
@@ -26,7 +27,7 @@
                 </div>
                 <div class="col-sm-2 mb-sm-20">
                     <select class="form-control">
-                        <option selected="selected">Ladrillos</option>
+                        <option selected="selected">Categorias</option>
                         @foreach (var category in Model.categories)
                         {
                             <option>@category.Description</option>
@@ -49,10 +50,10 @@
                     <div class="col-sm-6 col-md-4 col-lg-4">
                         <div class="shop-item">
                             <div class="shop-item-image">
-                                <img src="@product.Urlmage" alt="@product.Name" />
+                                <img src="~/Home/@product.Urlmage" alt="@product.Name" />
                                 <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">Agrega al carrito</span></a></div>
                             </div>
-                            <h4 class="shop-item-title font-alt"><a href="tienda_producto.html">@product.Name</a></h4>$ @product.Price
+                            <h4 class="shop-item-title font-alt"><a asp-action="Item">@product.Name</a></h4>$ @product.Price
                         </div>
                     </div>
                 }
