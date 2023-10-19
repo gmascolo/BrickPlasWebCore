@@ -33,9 +33,9 @@ namespace BrickPlasWebMVC.Services
             return await _productRepository.GetAll();
         }
 
-        Task<Product> IGenericService<Product>.GetById(int? id)
+        async Task<Product> IGenericService<Product>.GetById(int? id)
         {
-            throw new NotImplementedException();
+            return await _productRepository.GetById(id);
         }
 
         Task<Category> IProductService.GetProductByName(string Product)

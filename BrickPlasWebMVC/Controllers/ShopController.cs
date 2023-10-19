@@ -30,11 +30,14 @@ namespace BrickPlasWebMVC.Controllers
             return View(new ShopViewModel(products, categories));
         }
 
-        public IActionResult Item()
+        public IActionResult Item(int id)
         {
+            Product product = _productService.GetById(id).Result;
 
-            return View("Item");
+            return View(new ItemViewModel(product));
         }
+
+
 
     }
 }

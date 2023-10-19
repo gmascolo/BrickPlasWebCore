@@ -36,9 +36,11 @@ namespace BrickPlasWebMVC.Repositories
             return products;
         }
 
-        Task<Product> IGenericRepository<Product>.GetById(int? id)
+        async Task<Product> IGenericRepository<Product>.GetById(int? id)
         {
-            throw new NotImplementedException();
+            Product product = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+
+            return product;
         }
 
         Task<bool> IGenericRepository<Product>.Update(Product entity)
