@@ -14,7 +14,7 @@ namespace BrickPlasWebMVC.Services
 
         public Task<bool> Create(User entity)
         {
-            throw new NotImplementedException();
+            return _userRepository.Create(entity);
         }
 
         public Task<bool> Delete(int? id)

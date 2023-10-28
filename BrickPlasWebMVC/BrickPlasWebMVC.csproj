@@ -21,7 +21,6 @@
     <Folder Include="Data\Migrations\" />
     <Folder Include="Migrations\" />
     <Folder Include="Models\Sistema\" />
-    <Folder Include="Custom\" />
   </ItemGroup>
 
   <ItemGroup>

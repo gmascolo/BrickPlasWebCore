@@ -13,9 +13,21 @@ namespace BrickPlasWebMVC.Repositories
             _context = context;
         }
 
-        public Task<bool> Create(User entity)
+        public async Task<bool> Create(User entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Users.Add(entity);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                return false;
+            }
+
+
         }
 
         public Task<bool> Delete(int? id)

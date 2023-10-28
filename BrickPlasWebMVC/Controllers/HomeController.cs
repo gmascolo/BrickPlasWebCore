@@ -58,10 +58,23 @@ namespace BrickPlasWebMVC.Controllers
             {
                 UserName = registerForm["nombreUsuario"],
                 Password = registerForm["contrasena"],
-                Email = ""
+                Email = registerForm["email"],
+                FirstName = registerForm["nombre"],
+                LastName = registerForm["apellido"],
+                DocumentType = registerForm["tdocumento"],
+                DocumentNumber = registerForm["documento"],
+                CUIT = registerForm["cuit"],
+                PhoneNumber = registerForm["telefono"],
+                NormalizedUserName = registerForm["nombreUsuario"],
+                NormalizedEmail = registerForm["email"],
+                PhoneNumberConfirmed= true,
+                EmailConfirmed= true
+
             };
 
-            if (await _userService.Create(user))
+            bool result = await _userService.Create(user);
+
+            if (result == true)
             {
                 return View("Index");
             }
@@ -76,7 +89,7 @@ namespace BrickPlasWebMVC.Controllers
         {
 
             var username = loginForm["nombreUsuario"];
-            var password = loginForm["c"];
+            var password = loginForm["contrasena"];
 
             User user = await _userService.GetUserByName(username);
 
