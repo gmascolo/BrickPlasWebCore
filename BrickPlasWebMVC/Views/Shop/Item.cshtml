@@ -6,6 +6,7 @@
 <div class="main">
     <section class="module">
         <div class="container">
+            <form asp-controller="Shop" asp-action="AgregarAlCarrito" class="form" method="post" name="itemForm">
             <div class="row">
                 <div class="col-sm-6 mb-sm-40">
                     <a class="gallery" href="~/Home/@Model.product.Urlmage"><img src="~/Home/@Model.product.Urlmage" alt="Single Product Image" /></a>
@@ -18,7 +19,7 @@
                 <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h1 class="product-title font-alt">@Model.product.Name</h1>
+                                <h1 class="product-title font-alt" id="Name" name="Name">@Model.product.Name</h1>
                         </div>
                     </div>
                     <div class="row mb-20">
@@ -28,7 +29,7 @@
                     </div>
                     <div class="row mb-20">
                         <div class="col-sm-12">
-                            <div class="price font-alt"><span class="amount">$@Model.product.Price</span></div>
+                                <div class="price font-alt" id="Price" name="Price"><span class="amount">$@Model.product.Price</span></div>
                         </div>
                     </div>
                     <div class="row mb-20">
@@ -40,10 +41,12 @@
                     </div>
                     <div class="row mb-20">
                         <div class="col-sm-4 mb-sm-20">
-                            <input class="form-control input-lg" type="number" name="" value="1" max="40" min="1" required="required" />
+                                <input class="form-control input-lg" type="number" id="Quantity" name=" Quantity" value="1" max="40" min="1" required="required" />
                         </div>
-                        <div class="col-sm-8"><a class="btn btn-lg btn-block btn-round btn-b" href="#">Add To Cart</a></div>
+                            <div class="col-sm-8"><button class="btn btn-lg btn-block btn-round btn-b" type="submit">Add To Cart</button></div>
                     </div>
+                        <input type="hidden" id="prodID" name="prodID" value="@Model.product.Id" />
+            </form>
                     <div class="row mb-20">
                         <div class="col-sm-12">
                             <div class="product_meta">
