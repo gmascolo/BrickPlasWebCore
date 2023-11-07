@@ -28,7 +28,7 @@
                 <div class="col-sm-2 mb-sm-20">
                     <select class="form-control">
                         <option selected="selected">Categorias</option>
-                        @foreach (var category in Model.categories)
+                        @foreach (var category in Model.Categories)
                         {
                             <option>@category.Description</option>
                         }
@@ -45,7 +45,7 @@
     <section class="module-small">
         <div class="container">
             <div class="row multi-columns-row">
-                @foreach (var product in Model.products)
+                @foreach (var product in Model.Products)
                 {
                     <div class="col-sm-6 col-md-4 col-lg-4">
                         <div class="shop-item">

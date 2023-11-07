@@ -2,8 +2,9 @@
 using BrickPlasWebMVC.Services;
 using BrickPlasWebMVC.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
-using System.ComponentModel;
+using System.Web.Providers.Entities;
 
 namespace BrickPlasWebMVC.Controllers
 {
@@ -35,8 +36,12 @@ namespace BrickPlasWebMVC.Controllers
 
             List<Category> categories = _categoryService.GetAll().Result;
             List<Product> products = _productService.GetAll().Result;
+            var currentShop = new ShopViewModel(products, categories);
+            string json = JsonConvert.SerializeObject(currentShop);
 
-            return View(new ShopViewModel(products, categories));
+            Response.Cookies.Append("CurrentSession", json);
+
+            return View(currentShop);
         }
 
         public IActionResult Item(int id)
@@ -73,7 +78,7 @@ namespace BrickPlasWebMVC.Controllers
 
 
         [HttpPost]
-        public IActionResult AgregarAlCarrito(IFormCollection itemForm)
+        public IActionResult AgregarAlCarrito(IFormCollection prodItem)
         {
 
             // Obtén el carrito actual desde la cookie o crea uno nuevo
@@ -89,22 +94,25 @@ namespace BrickPlasWebMVC.Controllers
                 carrito = new List<CarritoItem>();
             }
 
+
+
             // Añade el nuevo artículo al carrito
-            var carritoItem = new CarritoItem
-            {
-                ProductId = int.Parse(itemForm["prodid"]),
-                Name = itemForm["Name"],
-                Price = float.Parse(itemForm["Price"]),
-                Quantity = int.Parse(itemForm["Quantity"])
-            };
+            var carritoItem = new CarritoItem();
+            prodItem.TryGetValue("prodID", out StringValues prodID);
+            carritoItem.ProductId = int.Parse(prodID);
+            prodItem.TryGetValue("prodQty", out StringValues qty);
+            carritoItem.Quantity = int.Parse(qty);
+
 
             carrito.Add(carritoItem);
 
             // Guarda el carrito actualizado en la cookie
             Response.Cookies.Append("MiCarrito", JsonConvert.SerializeObject(carrito));
 
+            var jsonCurrentShop = Request.Cookies["CurrentSession"];
+            var currentShop = JsonConvert.DeserializeObject<ShopViewModel>(jsonCurrentShop);   
             //// Redirecciona a la página del carrito o a donde desees
-            return View();
+            return View("Index", currentShop);
         }
 
         public IActionResult VerCarrito()

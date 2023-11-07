@@ -9,6 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\**" />
+    <Compile Remove="Models\Sistema\**" />
+    <Content Remove="Data\Migrations\**" />
+    <Content Remove="Models\Sistema\**" />
+    <EmbeddedResource Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="Models\Sistema\**" />
+    <None Remove="Data\Migrations\**" />
+    <None Remove="Models\Sistema\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Providers.Core" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.10" />
@@ -19,9 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Models\Sistema\" />
   </ItemGroup>
 
   <ItemGroup>
