@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="main">
+    <section class="module bg-dark-30" data-background="~/Home/assets/images/section-4.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <h1 class="module-title font-alt mb-0">Login-Registro</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="module">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h4 class="font-alt">Registro</h4>
+                    <hr class="divider-w mb-10">
+                    <form asp-action="Register" method="post" class="registro" name="formRegister">
+                        <div class="form-group">
+                            <input class="form-control" id="email" type="text" name="email" placeholder="Email" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="firstname" type="text" name="nombre" placeholder="Nombre" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="lastname" type="text" name="apellido" placeholder="Apellido" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="username" type="text" name="nombreUsuario" placeholder="NombreUsuario" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="password" type="password" name="contrasena" placeholder="Contrasena" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="repassword" type="password" name="re-password" placeholder="Re-enter Password" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="tdocument" type="text" name="tdocumento" placeholder="Tipo Documento" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="document" type="text" name="documento" placeholder="Documento" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="cuit" type="text" name="cuit" placeholder="CUIT" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="phone" type="text" name="telefono" placeholder="Telefono" />
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-block btn-round btn-b" value="Create">Registrarse</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+
+    jQuery('.registro').validate({
+        rules: {
+            contrasena: {
+                minlength: 5,
+            },
+            recontrasena: {
+                minlength: 5,
+                equalTo: "#password"
+            }
+        }
+    });
+
+</script>

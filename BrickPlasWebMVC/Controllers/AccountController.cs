@@ -1,18 +1,16 @@
-﻿using BrickPlasWebMVC.Models;
-using BrickPlasWebMVC.Models.Negocio;
+﻿using BrickPlasWebMVC.Models.Negocio;
 using BrickPlasWebMVC.Services;
 using BrickPlasWebMVC.ViewModel;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace BrickPlasWebMVC.Controllers
 {
-    public class HomeController : Controller
+    public class AccountController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<AccountController> _logger;
         private readonly IUserService _userService;
 
-        public HomeController(ILogger<HomeController> logger, 
+        public AccountController(ILogger<AccountController> logger,
                               IUserService userService)
         {
             _logger = logger;
@@ -24,16 +22,16 @@ namespace BrickPlasWebMVC.Controllers
             return View();
         }
 
-        //public IActionResult Login()
-        //{
-        //    return View("Login");
-        //}
+        public IActionResult Login()
+        {
+            return View("Login");
+        }
 
-        //public IActionResult Shop()
-        //{
+        public IActionResult Shop()
+        {
 
-        //    return Redirect("/Shop");
-        //}
+            return Redirect("/Shop");
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -67,8 +65,8 @@ namespace BrickPlasWebMVC.Controllers
                 PhoneNumber = registerForm["telefono"],
                 NormalizedUserName = registerForm["nombreUsuario"],
                 NormalizedEmail = registerForm["email"],
-                PhoneNumberConfirmed= true,
-                EmailConfirmed= true
+                PhoneNumberConfirmed = true,
+                EmailConfirmed = true
 
             };
 
@@ -76,14 +74,13 @@ namespace BrickPlasWebMVC.Controllers
 
             if (result == true)
             {
-                return View("Index");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
                 return View("Register");
             }
         }
-       
 
         private async Task<IActionResult> ValidateLogin(IFormCollection loginForm)
         {
@@ -93,14 +90,14 @@ namespace BrickPlasWebMVC.Controllers
 
             User user = await _userService.GetUserByName(username);
 
-            if(user == null)
+            if (user == null)
             {
-                return View("Login", new ValidateViewModel() { Visible = true});
+                return View("Login", new ValidateViewModel() { Visible = true });
             }
 
             if (username == user.UserName && password == user.Password)
             {
-                return View("Index");
+                return RedirectToAction("Index","Home");
             }
             else
             {
@@ -111,18 +108,6 @@ namespace BrickPlasWebMVC.Controllers
         public IActionResult Register()
         {
             return View("Register");
-        }
-
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
