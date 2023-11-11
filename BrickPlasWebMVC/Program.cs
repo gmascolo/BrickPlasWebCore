@@ -23,7 +23,6 @@ builder.Services.AddAuthentication("CookieAuth")
     {
         options.Cookie.Name = "UserAuthCookie";
         options.LoginPath = "/Account/Login";
-        // ... otras opciones ...
     });
 
 builder.Services.AddServices();
