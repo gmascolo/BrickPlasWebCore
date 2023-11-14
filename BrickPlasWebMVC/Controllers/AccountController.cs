@@ -1,7 +1,9 @@
 ﻿using BrickPlasWebMVC.Models.Negocio;
 using BrickPlasWebMVC.Services;
 using BrickPlasWebMVC.ViewModel;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BrickPlasWebMVC.Controllers
 {
@@ -9,6 +11,23 @@ namespace BrickPlasWebMVC.Controllers
     {
         private readonly ILogger<AccountController> _logger;
         private readonly IUserService _userService;
+
+        public class Role
+        {
+            public int RoleId { get; set; }
+            public string RoleName { get; set; }
+
+            public virtual ICollection<UserRole> UserRoles { get; set; }
+        }
+
+        public class UserRole
+        {
+            public int UserId { get; set; }
+            public virtual User User { get; set; }
+
+            public int RoleId { get; set; }
+            public virtual Role Role { get; set; }
+        }
 
         public AccountController(ILogger<AccountController> logger,
                               IUserService userService)
@@ -89,6 +108,7 @@ namespace BrickPlasWebMVC.Controllers
             var password = loginForm["contrasena"];
 
             User user = await _userService.GetUserByName(username);
+            //UserRole userRoles = ;
 
             if (user == null)
             {
@@ -97,6 +117,18 @@ namespace BrickPlasWebMVC.Controllers
 
             if (username == user.UserName && password == user.Password)
             {
+                var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, username),
+                // Puedes añadir más claims aquí si es necesario
+            };
+             
+            //foreach (var role in userRoles) // userRoles debe ser una lista de roles del usuario
+            //{
+            //        claims.Add(new Claim(ClaimTypes.Role, role));
+            //}
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
                 return RedirectToAction("Index","Home");
             }
             else

@@ -1,5 +1,4 @@
-﻿using BrickplasWebCore.Model;
-using BrickPlasWebMVC.Models.Negocio;
+﻿using BrickPlasWebMVC.Models.Negocio;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +19,6 @@ namespace BrickPlasWebMVC.Data
         public DbSet<SaleItem> SaleItems { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<User> Users { get; set; }
-   
+
     }
 }

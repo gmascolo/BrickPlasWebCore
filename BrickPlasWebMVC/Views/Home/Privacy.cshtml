@@ -1,6 +1,38 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
+    if (User.Identity.IsAuthenticated)
+    {
+        Layout = "~/Views/Shared/_Layout_LoggedIn.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Acceso Denegado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding: 100px;
+        }
+
+        h1 {
+            color: #ff0000;
+        }
+
+        p {
+            color: #333333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Acceso Denegado</h1>
+    <p>Lo sentimos, no tienes permisos para acceder a esta sección.</p>
+</body>
+</html>

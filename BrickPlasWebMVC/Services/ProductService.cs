@@ -1,4 +1,4 @@
-﻿using BrickplasWebCore.Model;
+﻿using BrickPlasWebMVC.Models.Negocio;
 using BrickPlasWebMVC.Repositories;
 
 namespace BrickPlasWebMVC.Services

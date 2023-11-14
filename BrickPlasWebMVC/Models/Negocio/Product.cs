@@ -1,4 +1,4 @@
-﻿namespace BrickplasWebCore.Model
+﻿namespace BrickPlasWebMVC.Models.Negocio
 {
     public class Product
     {

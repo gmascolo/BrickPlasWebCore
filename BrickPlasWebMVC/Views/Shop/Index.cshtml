@@ -51,7 +51,7 @@
                         <div class="shop-item">
                             <div class="shop-item-image">
                                 <img src="~/Home/@product.Urlmage" alt="@product.Name" />
-                                <div class="shop-item-detail"><a class="btn btn-round btn-b"><span class="icon-basket">Agrega al carrito</span></a></div>
+                                <div class="shop-item-detail"><a class="btn btn-round btn-b" @Url.Action("AgregarAlCarrito", "Shop", new { id = @product.Id })><span class="icon-basket">Agrega al carrito</span></a></div>
                             </div>
                             @* <h4 class="shop-item-title font-alt"><a asp-action="Item" id="@product.Id">@product.Name</a></h4>$ @product.Price *@
                             <h4 class="shop-item-title font-alt"><a href="@Url.Action("Item", "Shop", new { id = @product.Id })">@product.Name</a></h4>$ @product.Price

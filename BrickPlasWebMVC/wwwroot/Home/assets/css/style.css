@@ -1555,6 +1555,14 @@ Google map
   color: #111;
 }
 
+.shop-icon,
+.alt-features-icon {
+    line-height: 2.2;
+    font-size: 18px;
+    color: #8c969d;
+    margin: 4px 0 0 0 ;
+}
+
 .features-title,
 .alt-features-title {
   text-transform: uppercase;

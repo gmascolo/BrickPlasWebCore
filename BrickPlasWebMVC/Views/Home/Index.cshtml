@@ -1,5 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home page";
+
+    if (User.Identity.IsAuthenticated)
+    {
+        Layout = "~/Views/Shared/_Layout_LoggedIn.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 }
 
 <section class="home-section home-parallax home-fade home-full-height bg-dark-30" id="home" data-background="/Home/assets/images/HouseBig.jpg">

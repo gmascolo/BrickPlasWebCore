@@ -1,8 +1,6 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
 
-using System.ComponentModel.DataAnnotations;
-
-namespace BrickplasWebCore.Model
+namespace BrickPlasWebMVC.Models.Negocio
 {
     public class Category
     {

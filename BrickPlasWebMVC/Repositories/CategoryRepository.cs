@@ -1,5 +1,5 @@
-﻿using BrickplasWebCore.Model;
-using BrickPlasWebMVC.Data;
+﻿using BrickPlasWebMVC.Data;
+using BrickPlasWebMVC.Models.Negocio;
 using BrickPlasWebMVC.Services;
 using Microsoft.EntityFrameworkCore;
 

@@ -35,7 +35,7 @@
                                         <h5 class="product-title font-alt">$ @product.Price</h5>
                                     </td>
                                     <td>
-                                        <input class="form-control" type="number" name="" value="1" max="50" min="1" />
+                                        <input class="form-control" type="number" name="" value="@product.Quantity" max="50" min="1" />
                                     </td>
                                     <td>
                                         <h5 class="product-title font-alt">$ @product.Price</h5>
@@ -73,15 +73,15 @@
                             <tbody>
                                 <tr>
                                     <th>Cart Subtotal :</th>
-                                    <td>£40.00</td>
+                                    <td>$ @Model.subtotal</td>
                                 </tr>
                                 <tr>
                                     <th>Shipping Total :</th>
-                                    <td>£2.00</td>
+                                    <td>$ @Model.shipping</td>
                                 </tr>
                                 <tr class="shop-Cart-totalprice">
                                     <th>Total :</th>
-                                    <td>£42.00</td>
+                                    <td>$ @Model.totalprice</td>
                                 </tr>
                             </tbody>
                         </table>

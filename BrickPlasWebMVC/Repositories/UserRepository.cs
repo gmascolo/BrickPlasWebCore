@@ -1,6 +1,8 @@
 ﻿using BrickPlasWebMVC.Data;
 using BrickPlasWebMVC.Models.Negocio;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace BrickPlasWebMVC.Repositories
 {
@@ -13,12 +15,21 @@ namespace BrickPlasWebMVC.Repositories
             _context = context;
         }
 
+       
+
         public async Task<bool> Create(User entity)
         {
             try
             {
-                _context.Users.Add(entity);
-                _context.SaveChanges();
+                var user = new IdentityUser();
+                user.Email = entity.Email;
+                user.PhoneNumber = entity.PhoneNumber;
+                user.UserName = entity.UserName;
+                user.PhoneNumberConfirmed = entity.PhoneNumberConfirmed;
+                user.EmailConfirmed = entity.EmailConfirmed;
+                //await UserManager.CreateAsync(user, password);
+                //_context.Users.Add(entity);
+                //_context.SaveChanges();
                 return true;
             }
             catch (Exception e)

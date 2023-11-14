@@ -21,6 +21,11 @@ namespace BrickPlasWebMVC.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var username = User.Identity.Name;
+            }
+
             return View();
         }
 

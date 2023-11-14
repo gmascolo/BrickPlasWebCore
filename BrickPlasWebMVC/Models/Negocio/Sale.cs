@@ -3,7 +3,7 @@
 using System.ComponentModel.DataAnnotations;
 using BrickPlasWebMVC.Models.Negocio;
 
-namespace BrickplasWebCore.Model
+namespace BrickPlasWebMVC.Models.Negocio
 {
     public class Sale
     {
