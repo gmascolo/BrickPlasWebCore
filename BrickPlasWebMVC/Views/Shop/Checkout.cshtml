@@ -85,7 +85,10 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <button class="btn btn-lg btn-block btn-round btn-d" type="submit">Proceed to Checkout</button>
+                        <form method="post" action="@Url.Action("Pay", "Shop")">
+                            <button type="submit" class="btn btn-lg btn-block btn-round btn-b">Add To Cart</button>
+                        </form>
+                        
                     </div>
                 </div>
             </div>

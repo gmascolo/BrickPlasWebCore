@@ -47,8 +47,9 @@ namespace BrickPlasWebMVC.Controllers
         public IActionResult Item(int id)
         {
             Product product = _productService.GetById(id).Result;
+            List<Category> categories = _categoryService.GetAll().Result;
 
-            return View(new ItemViewModel(product));
+            return View(new ItemViewModel(product, categories));
         }
 
         public IActionResult Checkout()
@@ -190,31 +191,37 @@ namespace BrickPlasWebMVC.Controllers
             return View(new CheckoutViewModel(productsCheck, totalprice, subtotal, shipping));
         }
 
-        public async IActionResult MercadoPago()
+        public IActionResult Pay()
         {
-            MercadoPagoConfig.AccessToken = "TEST-2472737360159515-111400-86c167b062a33a5d81b2c8610082cc71-4637730";
+            return View();
+        }
 
-            var paymentRequest = new PaymentCreateRequest
-            {
-                TransactionAmount = decimal.Parse(Request["transactionAmount"]),
-                Token = Request["token"],
-                Description = Request["description"],
-                Installments = int.Parse(Request["installments"]),
-                PaymentMethodId = Request["paymentMethodId"],
-                Payer = new PaymentPayerRequest
-                {
-                    Email = Request["cardholderEmail"],
-                    Identification = new IdentificationRequest
-                    {
-                        Type = Request["identificationType"],
-                        Number = Request["identificationNumber"],
-                    },
-                    FirstName = Request["cardholderName"]
-                },
-            };
 
-            var client = new PaymentClient();
-            Payment payment = await client.CreateAsync(paymentRequest);
+        public IActionResult Mercadopago(HttpRequest request)
+        {
+            //MercadoPagoConfig.AccessToken = "TEST-2472737360159515-111400-86c167b062a33a5d81b2c8610082cc71-4637730";
+
+            //var paymentRequest = new PaymentCreateRequest
+            //{
+            //    TransactionAmount = decimal.Parse(request["transactionAmount"]),
+            //    Token = request["token"],
+            //    Description = request["description"],
+            //    Installments = int.Parse(request["installments"]),
+            //    PaymentMethodId = request["paymentMethodId"],
+            //    Payer = new PaymentPayerRequest
+            //    {
+            //        Email = request["cardholderEmail"],
+            //        Identification = new IdentificationRequest
+            //        {
+            //            Type = request["identificationType"],
+            //            Number = request["identificationNumber"],
+            //        },
+            //        FirstName = request["cardholderName"]
+            //    },
+            //};
+
+            //var client = new PaymentClient();
+            //Payment payment = client.CreateAsync(paymentRequest);
 
             return View();
         }

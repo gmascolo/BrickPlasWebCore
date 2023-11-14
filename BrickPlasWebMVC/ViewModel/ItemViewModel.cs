@@ -6,10 +6,12 @@ namespace BrickPlasWebMVC.ViewModel
     public class ItemViewModel
     {
         public Product product { get; set; }
+        public List<Category> categories { get; set; }
 
-        public ItemViewModel(Product product)
+        public ItemViewModel(Product product, List<Category> categories)
         {
             this.product = product;
+            this.categories = categories;
         }
 
     }
